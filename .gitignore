@@ -1,0 +1,28 @@
+
+# CMake ignores
+/build
+/build*
+
+.lock*
+.waf*
+
+# It is assumed that the rtems toolchain is configured and built in this folder
+toolchain/backup
+toolchain/rtems
+toolchain/build
+
+# Python ignores
+.idea
+!.idea/runConfigurations
+
+# Eclipse
+.settings
+.cproject
+.project
+.pydevproject
+!**/eclipse/.project
+!**/eclipse/.cproject
+!**/eclipse/.pydevproject
+/bin/
+
+waf3*
