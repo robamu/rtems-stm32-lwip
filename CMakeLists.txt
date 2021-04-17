@@ -1,16 +1,10 @@
 cmake_minimum_required(VERSION 3.15) 
 
 set(RTEMS_CONFIG_DIR 
-	"${CMAKE_CURRENT_SOURCE_DIR}/../../../rtems-cmake" 
+	"${CMAKE_CURRENT_SOURCE_DIR}/rtems-cmake" 
 	CACHE FILEPATH 
 	"Directory containing the RTEMS *.cmake files"
 )
-
-set(RTEMS_LWIP_DIR
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../../rtems-lwip"
-    CACHE FILEPATH
-    "Directory containing the RTEMS lwIP library"
-) 
 
 set(LWIP_CONFIG_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -51,7 +45,7 @@ add_executable(${TARGET_NAME})
 ################################################################################
 
 add_subdirectory(bsp_stm32)
-add_subdirectory(${RTEMS_LWIP_DIR} ${CMAKE_CURRENT_BINARY_DIR}/lwip)
+add_subdirectory(rtems-lwip)
 
 target_sources(${TARGET_NAME} PRIVATE
     init.c

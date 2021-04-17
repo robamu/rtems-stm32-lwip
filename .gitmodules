@@ -1,0 +1,6 @@
+[submodule "rtems-lwip"]
+	path = rtems-lwip
+	url = https://github.com/rmspacefish/rtems-lwip.git
+[submodule "rtems-cmake"]
+	path = rtems-cmake
+	url = https://github.com/rmspacefish/rtems-cmake.git
