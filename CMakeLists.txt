@@ -44,7 +44,10 @@ add_executable(${TARGET_NAME})
 # Application
 ################################################################################
 
-add_subdirectory(bsp_stm32)
+if(RTEMS_BSP MATCHES "arm/nucleo-h743zi")
+    add_subdirectory(bsp_stm32)
+endif()
+
 add_subdirectory(rtems-lwip)
 
 target_sources(${TARGET_NAME} PRIVATE

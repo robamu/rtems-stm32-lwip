@@ -63,13 +63,17 @@
 
 #define LWIP_NETIF_LINK_CALLBACK 		1
 
+#define STATIC_IP_ADDRESS               0
+
 #define ETH_MAC_ADDR0    ((uint8_t)0x02)
 #define ETH_MAC_ADDR1    ((uint8_t)0x00)
 #define ETH_MAC_ADDR2    ((uint8_t)0x00)
 #define ETH_MAC_ADDR3    ((uint8_t)0x00)
 #define ETH_MAC_ADDR4    ((uint8_t)0x00)
 #define ETH_MAC_ADDR5    ((uint8_t)0x00)
-#define ETH_MAC_ADDR 	 { ETH_MAC_ADDR0, ETH_MAC_ADDR1, ETH_MAC_ADDR2, ETH_MAC_ADDR3, ETH_MAC_ADDR4, ETH_MAC_ADDR5 }
+#define ETH_MAC_ADDR     { ETH_MAC_ADDR0, ETH_MAC_ADDR1, \
+                           ETH_MAC_ADDR2, ETH_MAC_ADDR3, \
+                           ETH_MAC_ADDR4, ETH_MAC_ADDR5 }
 
 /* Static IP ADDRESS */
 #define IP_ADDR0   169
