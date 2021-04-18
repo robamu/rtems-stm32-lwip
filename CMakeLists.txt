@@ -49,6 +49,7 @@ if(RTEMS_BSP MATCHES "arm/nucleo-h743zi")
 endif()
 
 add_subdirectory(rtems-lwip)
+add_subdirectory(networking)
 
 target_sources(${TARGET_NAME} PRIVATE
     init.c

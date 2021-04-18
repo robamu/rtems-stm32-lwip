@@ -10,18 +10,6 @@
 extern "C" {
 #endif
 
-
-/**
- * Declaration of global hardware handlers here.
- * Definition inside respective .cpp or .c files.
- */
-extern UART_HandleTypeDef huart3;
-extern GPIO_InitTypeDef gpio_uart_init_struct;
-
-void hardware_init();
-
-void MX_USART3_UART_Init(uint32_t baudRate);
-
 #ifdef __cplusplus
 }
 #endif
