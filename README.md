@@ -51,6 +51,12 @@ You can flash the application with Drag & Drop or with OpenOCD. An Eclipse proje
 to get started with OpenOCD. You can install OpenOCD for Windows from [here](https://xpack.github.io/openocd/)
 with `xpm` to have good Eclipse integration.
 
+# Testing the application
+
+The `ip_client` contains a simply Python TCP/IP client implementation which can be
+used to test the software.
+
+
 # Using Eclipse
 
 To use the given Eclipse project file, copy it from `eclipse` into the root. Then you can 
