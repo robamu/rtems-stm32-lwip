@@ -1,41 +1,95 @@
+#include "conf_app.h"
+
 #include <stm32h7xx_nucleo.h>
+#include <networking/udp_echoserver.h>
 
 #include <lwip_port/app_ethernet.h>
 #include <lwip_port/ethernetif.h>
-#include <eth_lwip.h>
+#include <lwip_port/app_dhcp.h>
 
 #include <lwip/netif.h>
 #include <lwip/timeouts.h>
 
 #include <rtems.h>
 #include <rtems/console.h>
+#include <rtems_lwip.h>
 
 #include <stdio.h>
 
-struct netif gnetif;
-
-int main() {
-	printf("STM32 RTEMS lwIP Application!\n\r");
-
-#if NO_SYS == 1
-	set_eth_lwip_link_callback_fnc(&ethernet_link_status_updated);
-
-	eth_lwip_init(NULL);
-
-	while (1) {
-//	    /* Read a received packet from the Ethernet buffers and send it
-//	       to the lwIP for handling */
-//	    ethernetif_input(&gnetif);
-//
-//	    /* Handle timeouts */
-//	    sys_check_timeouts();
-
-	#if LWIP_NETIF_LINK_CALLBACK
-	    //ethernet_link_periodic_handle(&gnetif);
-	#endif
-
-		(void) rtems_task_wake_after( 1.0 * rtems_clock_get_ticks_per_second() );
-	}
+#if LWIP_APP_BLINK_LED_PERIODIC == 1
+void led_periodic_handle();
+uint32_t led_timer = 0;
 #endif
 
+void stm32_lwip_raw_api_app();
+
+int main() {
+    printf("\n\r-- STM32 RTEMS lwIP Application -- \n\r");
+
+    char api[10] = {};
+    char type[25] = {};
+
+#if LWIP_APP_API_SELECT == LWIP_APP_RAW_API
+    sprintf(api, "Raw");
+#elif LWIP_APP_API_SELECT == LWIP_APP_NETCON_API
+    sprintf(api, "Netcon");
+#elif LWIP_APP_API_SELECT == LWIP_APP_SOCKET_API
+    sprintf(api, "Socket");
+#endif
+
+#if LWIP_APP_SELECT == LWIP_APP_UDP_ECHOSERVER
+    sprintf(type, "UDP Echoserver");
+#else
+    sprintf(type, "TCP Echoserver");
+#endif
+
+    printf("-- Application information | API: %s | Type: %s --\n\r", api, type);
+
+    BSP_LED_Init(LED1);
+    BSP_LED_Init(LED2);
+    BSP_LED_Init(LED3);
+
+    rtems_lwip_init(NULL, &ethernet_link_status_updated);
+
+    /* Raw API (mainloop) */
+#if LWIP_APP_API_SELECT == LWIP_APP_RAW_API
+    stm32_lwip_raw_api_app();
+#endif
+
+}
+
+void led_periodic_handle() {
+    uint32_t time_now = HAL_GetTick();
+    /* Blink LED every configured ms */
+    if (time_now - led_timer >= LWIP_APP_LED_BLINK_INTERVAL) {
+        led_timer = time_now;
+        BSP_LED_Toggle(LED1);
+    }
+}
+
+void stm32_lwip_raw_api_app() {
+
+#if LWIP_APP_SELECT == LWIP_APP_UDP_ECHOSERVER
+    udp_echoserver_init(7);
+#else
+#endif
+
+    while (1) {
+        /* Read a received packet from the Ethernet buffers and send it
+           to the lwIP for handling */
+        ethernetif_input(rtems_lwip_get_netif(0));
+
+#if LWIP_NETIF_LINK_CALLBACK
+        ethernet_link_periodic_handle(rtems_lwip_get_netif(0));
+#endif
+
+#if LWIP_DHCP
+        dhcp_periodic_handle(rtems_lwip_get_netif(0));
+#endif
+
+        led_periodic_handle();
+
+        /* Handle timeouts */
+        sys_check_timeouts();
+    }
 }

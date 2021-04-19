@@ -45,110 +45,117 @@
 
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
+
+#include "conf_app.h"
+
 /**
  * SYS_LIGHTWEIGHT_PROT==1: if you want inter-task protection for certain
  * critical regions during buffer allocation, deallocation and memory
  * allocation and deallocation.
  */
-#define SYS_LIGHTWEIGHT_PROT    0
+#define SYS_LIGHTWEIGHT_PROT        0
 
+#if LWIP_APP_API_SELECT == LWIP_APP_RAW_AP
 /**
  * NO_SYS==1: Provides VERY minimal functionality. Otherwise,
  * use lwIP facilities.
  */
-#define NO_SYS                  1
+#define NO_SYS                      1
+#else
+#define NO_SYS                      0
+#endif
 
-#define LWIP_NETIF_API          0
+#define LWIP_NETIF_API              0
 
 /* ---------- Memory options ---------- */
 /* MEM_ALIGNMENT: should be set to the alignment of the CPU for which
    lwIP is compiled. 4 byte alignment -> define MEM_ALIGNMENT to 4, 2
    byte alignment -> define MEM_ALIGNMENT to 2. */
-#define MEM_ALIGNMENT           4
+#define MEM_ALIGNMENT               4
 
 /* MEM_SIZE: the size of the heap memory. If the application will send
 a lot of data that needs to be copied, this should be set high. */
-#define MEM_SIZE                (10*1024)
+#define MEM_SIZE                    (10*1024)
 
 /* Relocate the LwIP RAM heap pointer */
-#define LWIP_RAM_HEAP_POINTER    (0x30044000)
+#define LWIP_RAM_HEAP_POINTER       (0x30044000)
 
 /* MEMP_NUM_PBUF: the number of memp struct pbufs. If the application
    sends a lot of data out of ROM (or other static memory), this
    should be set high. */
-#define MEMP_NUM_PBUF           10
+#define MEMP_NUM_PBUF               10
 /* MEMP_NUM_UDP_PCB: the number of UDP protocol control blocks. One
    per active UDP "connection". */
-#define MEMP_NUM_UDP_PCB        6
+#define MEMP_NUM_UDP_PCB            6
 /* MEMP_NUM_TCP_PCB: the number of simulatenously active TCP
    connections. */
-#define MEMP_NUM_TCP_PCB        10
+#define MEMP_NUM_TCP_PCB            10
 /* MEMP_NUM_TCP_PCB_LISTEN: the number of listening TCP
    connections. */
-#define MEMP_NUM_TCP_PCB_LISTEN 5
+#define MEMP_NUM_TCP_PCB_LISTEN     5
 /* MEMP_NUM_TCP_SEG: the number of simultaneously queued TCP
    segments. */
-#define MEMP_NUM_TCP_SEG        8
+#define MEMP_NUM_TCP_SEG            8
 /* MEMP_NUM_SYS_TIMEOUT: the number of simulateously active
    timeouts. */
-#define MEMP_NUM_SYS_TIMEOUT    10
+#define MEMP_NUM_SYS_TIMEOUT        10
 
 
 /* ---------- Pbuf options ---------- */
 /* PBUF_POOL_SIZE: the number of buffers in the pbuf pool.
    @ note: used to allocate Tx pbufs only */
-#define PBUF_POOL_SIZE          4
+#define PBUF_POOL_SIZE              4
 
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */
-#define PBUF_POOL_BUFSIZE       1528
+#define PBUF_POOL_BUFSIZE           1528
 
 /* LWIP_SUPPORT_CUSTOM_PBUF == 1: to pass directly MAC Rx buffers to the stack
    no copy is needed */
-#define LWIP_SUPPORT_CUSTOM_PBUF      1
+#define LWIP_SUPPORT_CUSTOM_PBUF    1
 
 /* ---------- IPv4 options ---------- */
-#define LWIP_IPV4                1
+#define LWIP_IPV4                   1
 
 /* ---------- TCP options ---------- */
-#define LWIP_TCP                1
-#define TCP_TTL                 255
+#define LWIP_TCP                    1
+#define TCP_TTL                     255
 
 /* Controls if TCP should queue segments that arrive out of
    order. Define to 0 if your device is low on memory. */
-#define TCP_QUEUE_OOSEQ         0
+#define TCP_QUEUE_OOSEQ             0
 
 /* TCP Maximum segment size. */
-#define TCP_MSS                 (1500 - 40)   /* TCP_MSS = (Ethernet MTU - IP header size - TCP header size) */
+#define TCP_MSS                     (1500 - 40)   /* TCP_MSS = (Ethernet MTU - IP header size - TCP header size) */
 
 /* TCP sender buffer space (bytes). */
-#define TCP_SND_BUF             (4*TCP_MSS)
+#define TCP_SND_BUF                 (4*TCP_MSS)
 
 /*  TCP_SND_QUEUELEN: TCP sender buffer space (pbufs). This must be at least
   as much as (2 * TCP_SND_BUF/TCP_MSS) for things to work. */
 
-#define TCP_SND_QUEUELEN        (2* TCP_SND_BUF/TCP_MSS)
+#define TCP_SND_QUEUELEN            (2* TCP_SND_BUF/TCP_MSS)
 
 /* TCP receive window. */
-#define TCP_WND                 (2*TCP_MSS)
+#define TCP_WND                     (2*TCP_MSS)
 
 
 /* ---------- ICMP options ---------- */
-#define LWIP_ICMP                       1
+#define LWIP_ICMP                   1
 
 
 /* ---------- DHCP options ---------- */
-#define LWIP_DHCP                       1
+#define LWIP_DHCP                   1
 
 
 /* ---------- UDP options ---------- */
-#define LWIP_UDP                1
-#define UDP_TTL                 255
+#define LWIP_UDP                    1
+#define UDP_TTL                     255
 
 /* ---------- link callback options ---------- */
 /* LWIP_NETIF_LINK_CALLBACK==1: Support a callback function from an interface
  * whenever the link changes (i.e., link down)
  */
-#define LWIP_NETIF_LINK_CALLBACK        1
+#define LWIP_NETIF_LINK_CALLBACK    1
 
 
 /* Static IP ADDRESS */
@@ -225,7 +232,11 @@ The STM32H7xx allows computing and verifying the IP, UDP, TCP and ICMP checksums
 /**
  * LWIP_NETCONN==1: Enable Netconn API (require to use api_lib.c)
  */
+#if LWIP_APP_API_SELECT == LWIP_APP_NETCON_API
+#define LWIP_NETCONN                    1
+#else
 #define LWIP_NETCONN                    0
+#endif
 
 /*
    ------------------------------------
@@ -235,7 +246,11 @@ The STM32H7xx allows computing and verifying the IP, UDP, TCP and ICMP checksums
 /**
  * LWIP_SOCKET==1: Enable Socket API (require to use sockets.c)
  */
+#if LWIP_APP_API_SELECT == LWIP_APP_SOCKET_API
+#define LWIP_SOCKET                     1
+#else
 #define LWIP_SOCKET                     0
+#endif
 
 /*
    ------------------------------------
