@@ -2,16 +2,25 @@ RTEMS lwIP STM32 Repository
 ======
 
 This repository tests the new RTEMS lwIP support for the `arm/nucleo-h743zi` BSP.
+After cloning this repository, make sure to clone the submodules as well
+
+```sh
+git submodule init
+git submodule update
+```
 
 # Building the application
 
 It is assumed the RTEMS BSP is installed at the `RTEMS_PREFIX` location. On Windows, it
 is recommended to install [MinGW64](https://www.msys2.org/) to have a Unix environment and run the
-following command to install `CMake` and required tools
+following command to install `CMake` and required tools.
 
 ```sh
 pacman -S mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain
 ```
+
+To connect to the STM32, make sure to install the `st-link` drivers 
+from [here](https://github.com/stlink-org/stlink) as well.
 
 ## CMake
 
