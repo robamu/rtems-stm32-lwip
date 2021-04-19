@@ -24,8 +24,9 @@ uint32_t led_timer = 0;
 void stm32_lwip_raw_api_app();
 
 int main() {
-    printf("\n\r-- STM32 RTEMS lwIP Application -- \n\r");
+  printf("\n\r-- STM32 RTEMS lwIP Application -- \n\r");
 
+  {
     char api[10] = {};
     char type[25] = {};
 
@@ -44,52 +45,56 @@ int main() {
 #endif
 
     printf("-- Application information | API: %s | Type: %s --\n\r", api, type);
+  }
 
-    BSP_LED_Init(LED1);
-    BSP_LED_Init(LED2);
-    BSP_LED_Init(LED3);
+  BSP_LED_Init(LED1);
+  BSP_LED_Init(LED2);
+  BSP_LED_Init(LED3);
 
-    rtems_lwip_init(NULL, &ethernet_link_status_updated);
+  set_dhcp_state(DHCP_START);
 
-    /* Raw API (mainloop) */
+  rtems_lwip_init(NULL, &ethernet_link_status_updated);
+
+  /* Raw API (mainloop) */
 #if LWIP_APP_API_SELECT == LWIP_APP_RAW_API
-    stm32_lwip_raw_api_app();
+  stm32_lwip_raw_api_app();
 #endif
 
 }
 
 void led_periodic_handle() {
-    uint32_t time_now = HAL_GetTick();
-    /* Blink LED every configured ms */
-    if (time_now - led_timer >= LWIP_APP_LED_BLINK_INTERVAL) {
-        led_timer = time_now;
-        BSP_LED_Toggle(LED1);
-    }
+  uint32_t time_now = HAL_GetTick();
+  /* Blink LED every configured ms */
+  if (time_now - led_timer >= LWIP_APP_LED_BLINK_INTERVAL) {
+    led_timer = time_now;
+    BSP_LED_Toggle(LED1);
+  }
 }
 
 void stm32_lwip_raw_api_app() {
 
 #if LWIP_APP_SELECT == LWIP_APP_UDP_ECHOSERVER
-    udp_echoserver_init(7);
+  udp_echoserver_init(7);
 #else
 #endif
 
-    while (1) {
-        /* Read a received packet from the Ethernet buffers and send it
+  while (1) {
+    /* Read a received packet from the Ethernet buffers and send it
            to the lwIP for handling */
-        ethernetif_input(rtems_lwip_get_netif(0));
+    ethernetif_input(rtems_lwip_get_netif(0));
+
+    /* Handle timeouts */
+    sys_check_timeouts();
 
 #if LWIP_NETIF_LINK_CALLBACK
-        ethernet_link_periodic_handle(rtems_lwip_get_netif(0));
+    ethernet_link_periodic_handle(rtems_lwip_get_netif(0));
 #endif
 
 #if LWIP_DHCP
-        dhcp_periodic_handle(rtems_lwip_get_netif(0));
+    dhcp_periodic_handle(rtems_lwip_get_netif(0));
 #endif
 
-        led_periodic_handle();
+    led_periodic_handle();
 
-        /* Handle timeouts */
-        sys_check_timeouts();
-    }
+  }
 }

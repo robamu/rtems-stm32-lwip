@@ -11,6 +11,9 @@ rtems_task Init(rtems_task_argument argument) {
 }
 
 /**************** START OF CONFIGURATION INFORMATION ****************/
+//! Specify the allocation scheme used for RTEMS.
+//! See: https://docs.rtems.org/branches/master/c-user/config/intro.html
+#define RTEMS_USE_UNLIMITED_OBJECTS_ALLOCATION  1
 
 #define CONFIGURE_APPLICATION_NEEDS_CONSOLE_DRIVER
 #define CONFIGURE_APPLICATION_NEEDS_CLOCK_DRIVER
@@ -21,8 +24,8 @@ rtems_task Init(rtems_task_argument argument) {
 #define CONFIGURE_MAXIMUM_MESSAGE_QUEUES    10
 #define CONFIGURE_MAXIMUM_SEMAPHORES        10
 
-#define CONFIGURE_EXTRA_TASK_STACKS         (5 * RTEMS_MINIMUM_STACK_SIZE)
-
+#define CONFIGURE_EXTRA_TASK_STACKS         (6 * RTEMS_MINIMUM_STACK_SIZE)
+#define CONFIGURE_INIT_TASK_STACK_SIZE      (RTEMS_MINIMUM_STACK_SIZE * 5)
 #define CONFIGURE_RTEMS_INIT_TASKS_TABLE
 
 #define CONFIGURE_INIT

@@ -64,11 +64,25 @@ target_include_directories(${TARGET_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}")
-install(TARGETS ${TARGET_NAME} DESTINATION "bin")
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_options(${TARGET_NAME} PRIVATE
+        "-Wl,-Map=${TARGET_NAME}.map"
+    )
 
-include("${RTEMS_CONFIG_DIR}/BuildType.cmake")
-set_build_type()
+    # Remove unused sections.
+    target_compile_options(${TARGET_NAME} PRIVATE
+        "-ffunction-sections"
+        "-fdata-sections"
+    )
+
+    # Removed unused sections.
+    if(NOT ${OS_FSFW} MATCHES rtems)
+        target_link_options(${TARGET_NAME} PRIVATE
+            "-Wl,--gc-sections"
+        )
+    endif()
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+endif()
 
 add_custom_command(
 	TARGET ${TARGET_NAME}
@@ -89,6 +103,9 @@ add_custom_command(
    COMMAND ${CMAKE_SIZE} ${TARGET_NAME}
    COMMENT ${POST_BUILD_COMMENT}
 )
+
+include("${RTEMS_CONFIG_DIR}/BuildType.cmake")
+set_build_type()
 
 ################################################################################
 # Load RTEMS post-project configuration and checks
