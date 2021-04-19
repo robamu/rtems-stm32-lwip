@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>lwip</name>
+	<name>rtems-stm32-lwip</name>
 	<comment></comment>
 	<projects>
 	</projects>
