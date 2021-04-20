@@ -74,7 +74,8 @@ void led_periodic_handle() {
 void stm32_lwip_raw_api_app() {
 
 #if LWIP_APP_SELECT == LWIP_APP_UDP_ECHOSERVER
-  udp_echoserver_init(7);
+  udp_echoserver_init(LWIP_APP_TCPIP_PORT);
+  printf("Listener port for UDP server: %d\n\r", LWIP_APP_TCPIP_PORT);
 #else
 #endif
 

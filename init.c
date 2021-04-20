@@ -31,12 +31,11 @@ rtems_task Init(rtems_task_argument argument) {
 
 #else
 
-#define CONFIGURE_MAXIMUM_TASKS                     2
-#define CONFIGURE_MAXIMUM_MESSAGE_QUEUES            5
-#define CONFIGURE_MAXIMUM_SEMAPHORES                5
-#define CONFIGURE_MAXIMUM_TIMERS                    5
+#define CONFIGURE_MAXIMUM_TASKS                     5
+#define CONFIGURE_MAXIMUM_MESSAGE_QUEUES            1
+#define CONFIGURE_MAXIMUM_SEMAPHORES                1
+#define CONFIGURE_MAXIMUM_TIMERS                    1
 #define CONFIGURE_INIT_TASK_STACK_SIZE              (RTEMS_MINIMUM_STACK_SIZE * 2)
-//! Around 41 kB extra task stack for now.
 #define CONFIGURE_EXTRA_TASK_STACKS                 (2 * RTEMS_MINIMUM_STACK_SIZE)
 
 #endif /* RTEMS_USE_UNLIMITED_OBJECTS_ALLOCATION == 1 */

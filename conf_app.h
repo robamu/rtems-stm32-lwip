@@ -8,6 +8,8 @@
 #define LWIP_APP_API_SELECT         0
 
 
+#define LWIP_APP_TCPIP_PORT         7
+
 #define LWIP_APP_UDP_ECHOSERVER     0
 #define LWIP_APP_TCP_ECHOSERVER     1
 
@@ -17,4 +19,7 @@
 
 #define LWIP_APP_BLINK_LED_PERIODIC      1
 #define LWIP_APP_LED_BLINK_INTERVAL      1000
+
+#define LWIP_APP_RECEIVE_WIRETAPPING    1
+
 #endif /* CONF_APP_H_ */
