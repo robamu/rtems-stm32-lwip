@@ -7,6 +7,10 @@ from definitions import AnsiColors
 from utility import print_protected
 
 
+CLIENT_SOCKET = socket(AF_INET, SOCK_DGRAM)
+BUFFER_SIZE = 1500
+
+
 def main():
     print(f"TCP/IP client for the STM32 lwIP RTEMS example")
     sender = threading.Thread(target=sender_thread, args=(None,))
@@ -34,17 +38,17 @@ def tcp_sender():
 
 
 def udp_sender():
-    server_socket = socket(AF_INET, SOCK_DGRAM)
     target_address = SERVER_ADDRESS, SERVER_PORT
     string = "Hello, this is a UDP test!"
     data = string.encode(encoding='utf-8')
     print_protected(f"Test string to be sent: {string}")
-    bytes_sent = server_socket.sendto(data, target_address)
+    bytes_sent = CLIENT_SOCKET.sendto(data, target_address)
     print_protected(f"{AnsiColors.CYAN}Sender: Sent {bytes_sent} bytes to server")
 
 
 def listener_thread(args: any):
-    pass
+    reply, from_addr = CLIENT_SOCKET.recvfrom(BUFFER_SIZE)
+    print_protected(f"{AnsiColors.CYAN}Client: Received back {len(reply)} bytes: {reply}")
 
 
 if __name__ == "__main__":
