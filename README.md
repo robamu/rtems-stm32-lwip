@@ -71,6 +71,21 @@ You can flash the application with Drag & Drop or with OpenOCD. An Eclipse proje
 to get started with OpenOCD. You can install OpenOCD for Windows from [here](https://xpack.github.io/openocd/)
 with `xpm` to have good Eclipse integration.
 
+When using OpenOCD, it is recommended to perform following steps to avoid the auto-probe error:
+
+Add the following lines to the `stm32h7x.cfg` file located inside the OpenOCD folder inside 
+the `scripts/target` folder:
+
+```sh
+$_CHIPNAME.cpu0 configure -event gdb-attach {
+    halt
+}
+
+$_CHIPNAME.cpu0 configure -event gdb-attach {
+    reset init
+}
+```
+   
 # Testing the application
 
 The `ip_client` contains a simply Python TCP/IP client implementation which can be
@@ -97,3 +112,4 @@ To use the given Eclipse project file, copy it from `eclipse` into the root. The
 import the folder as an Eclipse project. Make sure to only import the root project file instead 
 of both when importing the project. Right click on the project folder and go to C/C++ Build 
 &rarr; Build Variables. Here you can set `RTEMS_PREFIX` accordingly to set up the Eclipse indexer.
+
