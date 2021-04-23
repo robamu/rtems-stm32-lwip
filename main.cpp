@@ -1,3 +1,17 @@
+/**
+ * @brief   Demo application for the STM32 RTEMS lwIP support.
+ * @details
+ * This example was used to test all three major lwIP APIs on the STM32H7 with RTEMS
+ *
+ *  1. RAW API, high performance using callbacks
+ *  2. Netcon API, sequential API
+ *  3. Socket API, sequential API, less performance but portable API.
+ *
+ * This demo can be configured through the CMake build system or by manually editing the
+ * conf_app.h file in the build folder.
+ * @author  R. Mueller
+ * @return
+ */
 #include "conf_app.h"
 #include "rtems_lwip.h"
 
