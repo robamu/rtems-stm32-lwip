@@ -1,5 +1,5 @@
-#ifndef NETWORKING_NETCON_NETCON_APP_H_
-#define NETWORKING_NETCON_NETCON_APP_H_
+#ifndef NETWORKING_NETCON_SOCKET_APP_H_
+#define NETWORKING_NETCON_SOCKET_APP_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -11,4 +11,4 @@ void stm32_lwip_socket_api_app();
 }
 #endif
 
-#endif /* NETWORKING_NETCON_NETCON_APP_H_ */
+#endif /* NETWORKING_NETCON_SOCKET_APP_H_ */

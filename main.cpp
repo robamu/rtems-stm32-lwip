@@ -1,6 +1,7 @@
 #include "conf_app.h"
 #include "rtems_lwip.h"
 #include "stm32h7xx_nucleo.h"
+
 #include "echoserver/socket/socket_app.h"
 #include "echoserver/raw/raw_app.h"
 #include "echoserver/netcon/netconn_app.h"
@@ -49,7 +50,7 @@ int main() {
 #if LWIP_APP_API_SELECT == LWIP_APP_RAW_API
   stm32_lwip_raw_api_app();
 #elif LWIP_APP_API_SELECT == LWIP_APP_NETCON_API
-  stm32_lwip_netcon_api_app();
+  stm32_lwip_netconn_api_app();
 #elif LWIP_APP_API_SELECT == LWIP_APP_SOCKET_API
   stm32_lwip_socket_api_app();
 #endif

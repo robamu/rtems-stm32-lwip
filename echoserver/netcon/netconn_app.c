@@ -11,15 +11,15 @@
 
 #if LWIP_NETCONN
 
-#include "udp_echo.h"
-#include "tcp_echo.h"
+#include "udp_echo_netconn.h"
+#include "tcp_echo_netconn.h"
 
 #include "stm32h7xx_nucleo.h"
 #include "lwip/sys.h"
 
 #include <stdio.h>
 
-void stm32_lwip_netcon_api_app() {
+void stm32_lwip_netconn_api_app() {
 
 
 #if LWIP_APP_SELECT == LWIP_APP_UDP_ECHOSERVER

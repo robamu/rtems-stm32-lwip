@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void stm32_lwip_netcon_api_app();
+void stm32_lwip_netconn_api_app();
 
 #ifdef __cplusplus
 }
