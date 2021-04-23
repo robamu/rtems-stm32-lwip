@@ -9,12 +9,12 @@
 #include "lwip/sockets.h"
 #include "lwip/netdb.h"
 
-uint8_t recv_buffer[ETH_RX_BUFFER_SIZE] RTEMS_ALIGNED(32);
+uint8_t recv_buffer[ETH_RX_BUFFER_SIZE];
 
 void udp_socket_thread(void* args) {
-
   int sock, newconn, size;
   struct sockaddr_in address;
+
 
   /* create a UDP socket */
   if ((sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
@@ -73,7 +73,7 @@ void udp_socket_thread(void* args) {
 }
 
 void udp_socket_init() {
-  sys_thread_new("udpecho_thread", udp_socket_thread, NULL, (RTEMS_MINIMUM_STACK_SIZE*2),
+  sys_thread_new("udpecho_thread", udp_socket_thread, NULL, (RTEMS_MINIMUM_STACK_SIZE*3),
       LWIP_APP_SERVER_THREAD_PRIO);
 }
 

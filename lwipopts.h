@@ -271,7 +271,7 @@ The STM32H7xx allows computing and verifying the IP, UDP, TCP and ICMP checksums
    ---------------------------------
 */
 
-#define TCPIP_THREAD_NAME              "TCP/IP"
+#define TCPIP_THREAD_NAME              "LWIP"
 #define TCPIP_THREAD_STACKSIZE          RTEMS_MINIMUM_STACK_SIZE
 #define TCPIP_MBOX_SIZE                 6
 #define DEFAULT_UDP_RECVMBOX_SIZE       6
@@ -297,6 +297,8 @@ The STM32H7xx allows computing and verifying the IP, UDP, TCP and ICMP checksums
 #define ETH_MAC_ADDR     { ETH_MAC_ADDR0, ETH_MAC_ADDR1, \
                            ETH_MAC_ADDR2, ETH_MAC_ADDR3, \
                            ETH_MAC_ADDR4, ETH_MAC_ADDR5 }
+
+//#define LWIP_DEBUG
 
 #endif /* __LWIPOPTS_H__ */
 

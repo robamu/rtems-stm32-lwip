@@ -1,11 +1,13 @@
 #include "conf_app.h"
 #include "rtems_lwip.h"
+
 #include "stm32h7xx_nucleo.h"
 
 #include "echoserver/socket/socket_app.h"
 #include "echoserver/raw/raw_app.h"
 #include "echoserver/netcon/netconn_app.h"
 
+#include "lwip_port/ethernetif.h"
 #include "lwip_port/app_ethernet.h"
 #include "lwip_port/app_dhcp.h"
 
@@ -41,8 +43,6 @@ int main() {
   BSP_LED_Init(LED1);
   BSP_LED_Init(LED2);
   BSP_LED_Init(LED3);
-
-  set_dhcp_state(DHCP_START);
 
   rtems_lwip_init(NULL, &ethernet_link_status_updated);
 

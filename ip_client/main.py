@@ -64,6 +64,7 @@ def tcp_sender():
 def udp_sender():
     target_address = SERVER_ADDRESS, SERVER_PORT
     string = f"Hello, this is a {PROTOCOL_STRING} test!"
+    # string = f"Hello World!"
     data = string.encode(encoding='utf-8')
     print_protected(f"Test string to be sent: {string}")
     bytes_sent = CLIENT_SOCKET.sendto(data, target_address)
