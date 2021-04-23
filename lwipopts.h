@@ -55,7 +55,7 @@
  */
 #define SYS_LIGHTWEIGHT_PROT        0
 
-#if LWIP_APP_API_SELECT == LWIP_APP_RAW_AP
+#if LWIP_APP_API_SELECT == LWIP_APP_RAW_API
 /**
  * NO_SYS==1: Provides VERY minimal functionality. Otherwise,
  * use lwIP facilities.
@@ -144,7 +144,9 @@ a lot of data that needs to be copied, this should be set high. */
 
 
 /* ---------- DHCP options ---------- */
+#if LWIP_APP_USE_DHCP == 1
 #define LWIP_DHCP                   1
+#endif
 
 
 /* ---------- UDP options ---------- */

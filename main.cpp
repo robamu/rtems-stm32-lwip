@@ -1,4 +1,4 @@
-#include "conf_app.h"
+#include <conf_app.h>
 
 #include <stm32h7xx_nucleo.h>
 #include <networking/udp_echoserver.h>
@@ -76,7 +76,9 @@ void stm32_lwip_raw_api_app() {
 #if LWIP_APP_SELECT == LWIP_APP_UDP_ECHOSERVER
   udp_echoserver_init(LWIP_APP_TCPIP_PORT);
   printf("Listener port for UDP server: %d\n\r", LWIP_APP_TCPIP_PORT);
-#else
+#elif LWIP_APP_SELECT == LWIP_APP_TCP_ECHOSERVER
+  tcp_echoserver_init(LWIP_APP_TCPIP_PORT);
+  printf("Listener port for TCP server: %d\n\r", LWIP_APP_TCPIP_PORT);
 #endif
 
   while (1) {
