@@ -30,7 +30,7 @@
  *
  */
 /* Includes ------------------------------------------------------------------*/
-#include "tcpecho.h"
+#include "tcp_echo_netconn.h"
 #include "lwip/opt.h"
 
 #if LWIP_NETCONN

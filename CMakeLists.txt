@@ -82,7 +82,7 @@ if(RTEMS_BSP MATCHES "arm/nucleo-h743zi")
 endif()
 
 add_subdirectory(rtems-lwip)
-add_subdirectory(networking)
+add_subdirectory(echoserver)
 
 target_sources(${TARGET_NAME} PRIVATE
     init.c

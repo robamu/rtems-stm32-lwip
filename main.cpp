@@ -1,18 +1,15 @@
-#include <conf_app.h>
+#include "conf_app.h"
+#include "rtems_lwip.h"
+#include "stm32h7xx_nucleo.h"
+#include "echoserver/socket/socket_app.h"
+#include "echoserver/raw/raw_app.h"
+#include "echoserver/netcon/netconn_app.h"
 
-#include <stm32h7xx_nucleo.h>
-#include <networking/raw/raw_app.h>
-#include <networking/netcon/netcon_app.h>
-
-#include <networking/netcon/udpecho.h>
-#include <networking/netcon/tcpecho.h>
-
-#include <lwip_port/app_ethernet.h>
-#include <lwip_port/app_dhcp.h>
+#include "lwip_port/app_ethernet.h"
+#include "lwip_port/app_dhcp.h"
 
 #include <rtems.h>
 #include <rtems/console.h>
-#include <rtems_lwip.h>
 
 #include <stdio.h>
 
@@ -53,6 +50,8 @@ int main() {
   stm32_lwip_raw_api_app();
 #elif LWIP_APP_API_SELECT == LWIP_APP_NETCON_API
   stm32_lwip_netcon_api_app();
+#elif LWIP_APP_API_SELECT == LWIP_APP_SOCKET_API
+  stm32_lwip_socket_api_app();
 #endif
 
 }

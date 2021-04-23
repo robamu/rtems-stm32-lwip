@@ -1,5 +1,9 @@
-#include <rtems_lwip.h>
-#include "netcon_app.h"
+#include "netconn_app.h"
+#include "conf_app.h"
+#include "rtems_lwip.h"
+
+#include "echoserver/common/common.h"
+
 #include "lwip_port/app_dhcp.h"
 #include "lwip_port/ethernetif.h"
 
@@ -7,16 +11,13 @@
 
 #if LWIP_NETCONN
 
-#include "udpecho.h"
-#include "tcpecho.h"
-#include <conf_app.h>
-#include <stm32h7xx_nucleo.h>
+#include "udp_echo.h"
+#include "tcp_echo.h"
 
+#include "stm32h7xx_nucleo.h"
 #include "lwip/sys.h"
 
 #include <stdio.h>
-
-void led_thread();
 
 void stm32_lwip_netcon_api_app() {
 
@@ -30,21 +31,9 @@ void stm32_lwip_netcon_api_app() {
   tcpecho_init();
   printf("Listener port for TCP server: %d\n\r", LWIP_APP_TCPIP_PORT);
 #endif
+  start_networking_utility_threads();
   sys_thread_new("led0", led_thread, NULL, RTEMS_MINIMUM_STACK_SIZE, RTEMS_MAXIMUM_PRIORITY - 20);
-  sys_thread_new("link", ethernet_link_thread, (void*) rtems_lwip_get_netif(0),
-      RTEMS_MINIMUM_STACK_SIZE, RTEMS_MINIMUM_PRIORITY + 50);
-  sys_thread_new("dhcp", dhcp_thread, (void*) rtems_lwip_get_netif(0), RTEMS_MINIMUM_STACK_SIZE,
-      RTEMS_MAXIMUM_PRIORITY - 70);
   rtems_task_delete( RTEMS_SELF );
-}
-
-void led_thread() {
-
-  while(true) {
-    BSP_LED_Toggle(LED1);
-    usleep(LWIP_APP_LED_BLINK_INTERVAL * 1000);
-  }
-
 }
 
 #endif

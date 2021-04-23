@@ -1,7 +1,9 @@
-#include <stdio.h>
-#include <conf_app.h>
+#include "conf_app.h"
+
 #include <bsp.h>
 #include <rtems/rtems/tasks.h>
+
+#include <stdio.h>
 
 extern int main();
 

@@ -30,7 +30,7 @@
  *
  */
 /* Includes ------------------------------------------------------------------*/
-#include "udpecho.h"
+#include "udp_echo_netconn.h"
 
 #include "lwip/opt.h"
 
