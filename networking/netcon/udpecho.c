@@ -64,9 +64,16 @@ udpecho_thread(void *arg)
       
       tx_buf = netbuf_new();
       netbuf_alloc(tx_buf, buf->p->tot_len);
-      
+
       pbuf_take(tx_buf->p, (const void *)buf->p->payload, buf->p->tot_len);
-      
+
+#if LWIP_APP_RECEIVE_WIRETAPPING == 1
+      char* data = (char*) buf->p->payload;
+      *(data + buf->p->len) = '\0';
+      printf("UDP Netcon Server received %d bytes\n\r", buf->p->len);
+      printf("Received string: %s\n\r", data);
+#endif
+
       err = netconn_sendto(conn, tx_buf, (const ip_addr_t *)&(buf->addr), buf->port);
       if(err != ERR_OK) {
         LWIP_DEBUGF(LWIP_DBG_ON, ("netconn_send failed: %d\n", (int)err));
