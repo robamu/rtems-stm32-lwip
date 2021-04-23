@@ -65,6 +65,20 @@ with `xpm` to have good Eclipse integration.
 The `ip_client` contains a simply Python TCP/IP client implementation which can be
 used to test the software.
 
+Alternatively you can use `netcat` to test the application
+
+Send and receive UDP packet:
+
+```sh
+echo "Hello from PC" | nc -w1 -u <ipAddress> <port>
+```
+
+UDP Client:
+
+```sh
+nc -u <ipAddress> <port>
+```
+
 
 # Using Eclipse
 
