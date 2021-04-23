@@ -44,8 +44,6 @@ int main() {
   BSP_LED_Init(LED2);
   BSP_LED_Init(LED3);
 
-  //set_dhcp_state(DHCP_START);
-
   rtems_lwip_init(NULL, &ethernet_link_status_updated);
 
   /* Raw API (mainloop) */
