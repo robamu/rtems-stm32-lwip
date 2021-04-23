@@ -9,8 +9,11 @@ from utility import print_protected
 
 if config.TCPIP_PROT == config.Protocols.TCPIP_PROT_1_UDP:
     CLIENT_SOCKET = socket(AF_INET, SOCK_DGRAM)
+    PROTOCOL_STRING = "UDP"
 else:
     CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)
+    PROTOCOL_STRING = "TCP"
+
 
 BUFFER_SIZE = 1500
 
@@ -46,7 +49,7 @@ def sender_thread(args: any):
 
 def tcp_sender():
     target_address = SERVER_ADDRESS, SERVER_PORT
-    string = "Hello, this is a UDP test!"
+    string = f"Hello, this is a {PROTOCOL_STRING} test!"
     data = string.encode(encoding='utf-8')
     print_protected(f"Test string to be sent: {string}")
     CLIENT_SOCKET.connect(target_address)
@@ -60,7 +63,7 @@ def tcp_sender():
 
 def udp_sender():
     target_address = SERVER_ADDRESS, SERVER_PORT
-    string = "Hello, this is a UDP test!"
+    string = f"Hello, this is a {PROTOCOL_STRING} test!"
     data = string.encode(encoding='utf-8')
     print_protected(f"Test string to be sent: {string}")
     bytes_sent = CLIENT_SOCKET.sendto(data, target_address)

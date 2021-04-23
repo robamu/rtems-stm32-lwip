@@ -54,7 +54,7 @@ udpecho_thread(void *arg)
   LWIP_UNUSED_ARG(arg);
   
   conn = netconn_new(NETCONN_UDP);
-  netconn_bind(conn, IP_ADDR_ANY, 7);
+  netconn_bind(conn, IP_ADDR_ANY, LWIP_APP_TCPIP_PORT);
   
   LWIP_ERROR("udpecho: invalid conn", (conn != NULL), return;);
   

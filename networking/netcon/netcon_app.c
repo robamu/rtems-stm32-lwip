@@ -35,10 +35,7 @@ void stm32_lwip_netcon_api_app() {
       RTEMS_MINIMUM_STACK_SIZE, RTEMS_MINIMUM_PRIORITY + 50);
   sys_thread_new("dhcp", dhcp_thread, (void*) rtems_lwip_get_netif(0), RTEMS_MINIMUM_STACK_SIZE,
       RTEMS_MAXIMUM_PRIORITY - 70);
-  while(true) {
-    usleep(500 * 1000);
-  }
-  //rtems_task_delete( RTEMS_SELF );
+  rtems_task_delete( RTEMS_SELF );
 }
 
 void led_thread() {

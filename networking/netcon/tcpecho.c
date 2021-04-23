@@ -40,7 +40,6 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define TCPECHO_THREAD_PRIO  (osPriorityAboveNormal)
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -55,7 +54,7 @@ static void tcpecho_thread(void *arg)
   /* Create a new connection identifier. */
   /* Bind connection to well known port number 7. */
   conn = netconn_new(NETCONN_TCP);
-  netconn_bind(conn, IP_ADDR_ANY, 7);
+  netconn_bind(conn, IP_ADDR_ANY, LWIP_APP_TCPIP_PORT);
 
   LWIP_ERROR("tcpecho: invalid conn", (conn != NULL), return;);
 
@@ -72,12 +71,20 @@ static void tcpecho_thread(void *arg)
       struct netbuf *buf;
       void *data;
       u16_t len;
-      
+
       while ((err = netconn_recv(newconn, &buf)) == ERR_OK) {
-        /*printf("Recved\n");*/
+
         do {
-             netbuf_data(buf, &data, &len);
-             err = netconn_write(newconn, data, len, NETCONN_COPY);
+          netbuf_data(buf, &data, &len);
+
+#if LWIP_APP_RECEIVE_WIRETAPPING == 1
+          char* data = (char*) buf->p->payload;
+          *(data + buf->p->len) = '\0';
+          printf("TCP Netcon Server received %d bytes\n\r", buf->p->len);
+          printf("Received string: %s\n\r", data);
+#endif
+
+          err = netconn_write(newconn, data, len, NETCONN_COPY);
         } while (netbuf_next(buf) >= 0);
         netbuf_delete(buf);
       }
