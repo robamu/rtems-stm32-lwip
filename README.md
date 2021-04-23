@@ -9,6 +9,16 @@ git submodule init
 git submodule update
 ```
 
+# Prerequisites
+
+See [here](https://github.com/rmspacefish/rtems-tools) for a guide to build the RTEMS BSP.
+Alternatively, you can download pre-compiled BSPs for Windows from
+[here](https://drive.google.com/drive/u/0/folders/15pO3FCUwceghrnYjmNlgC6K1Z8D_6iu2)
+
+# Configuring the application
+
+The application can be configured by using the `conf_app.h` header file.
+
 # Building the application
 
 It is assumed the RTEMS BSP is installed at the `RTEMS_PREFIX` location. On Windows, it
@@ -43,14 +53,22 @@ mkdir build-Debug && cd build-Debug
 cmake -DCMAKE_BUILD_TYPE="Debug" -DRTEMS_BSP="arm/nucleo-h743zi" -DRTEMS_PREFIX=$RTEMS_PREFIX ..
 cmake --build . -j
 ```
-# Prerequisites
-
-See [here](https://github.com/rmspacefish/rtems-tools) for a guide to build the RTEMS BSP.
-Alternatively, you can download pre-compiled BSPs for Windows from
-[here](https://drive.google.com/drive/u/0/folders/15pO3FCUwceghrnYjmNlgC6K1Z8D_6iu2)
 
 # Flashing the application
 
 You can flash the application with Drag & Drop or with OpenOCD. An Eclipse project file is provided
 to get started with OpenOCD. You can install OpenOCD for Windows from [here](https://xpack.github.io/openocd/)
 with `xpm` to have good Eclipse integration.
+
+# Testing the application
+
+The `ip_client` contains a simply Python TCP/IP client implementation which can be
+used to test the software.
+
+
+# Using Eclipse
+
+To use the given Eclipse project file, copy it from `eclipse` into the root. Then you can 
+import the folder as an Eclipse project. Make sure to only import the root project file instead 
+of both when importing the project. Right click on the project folder and go to C/C++ Build 
+&rarr; Build Variables. Here you can set `RTEMS_PREFIX` accordingly to set up the Eclipse indexer.
