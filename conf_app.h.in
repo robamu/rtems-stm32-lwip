@@ -3,15 +3,13 @@
 
 #include <definitions.h>
 
+#cmakedefine01 LWIP_APP_BLINK_LED_PERIODIC 
+#cmakedefine01 LWIP_APP_RECEIVE_WIRETAPPING
+#cmakedefine01 LWIP_APP_USE_DHCP   
+
 #cmakedefine LWIP_APP_API_SELECT @LWIP_APP_API_SELECT@
 #cmakedefine LWIP_APP_SELECT @LWIP_APP_SELECT@
-
-#cmakedefine01 LWIP_APP_BLINK_LED_PERIODIC 
+#cmakedefine LWIP_APP_TCPIP_PORT @LWIP_APP_TCPIP_PORT@
 #cmakedefine LWIP_APP_LED_BLINK_INTERVAL @LWIP_APP_LED_BLINK_INTERVAL@
-#cmakedefine01 LWIP_APP_RECEIVE_WIRETAPPING
-
-#cmakedefine LWIP_APP_TCPIP_PORT 7   
-
-#cmakedefine01 LWIP_APP_USE_DHCP            
 
 #endif /* CONF_APP_H_ */
