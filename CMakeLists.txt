@@ -8,6 +8,39 @@ set(RTEMS_CONFIG_DIR
 
 set(LWIP_CONFIG_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 
+set(LWIP_APP_API_STRING "raw" CACHE STRING "lwIP API select")
+set_property(CACHE LWIP_APP_API_STRING PROPERTY STRINGS raw netcon socket)
+
+if(LWIP_APP_API_STRING MATCHES "raw")
+    set(LWIP_APP_API_SELECT LWIP_APP_RAW_API)
+elseif(LWIP_APP_API_STRING MATCHES "netcon")
+    set(LWIP_APP_API_SELECT LWIP_APP_NETCON_API)
+elseif(LWIP_APP_API_STRING MATCHES "socket")
+    set(LWIP_APP_API_SELECT LWIP_APP_SOCKET_API)
+endif()
+
+set(LWIP_APP_STRING "udp" CACHE STRING "TCP/IP protocol select")
+set_property(CACHE LWIP_APP_STRING PROPERTY STRINGS udp tcp)
+
+if(LWIP_APP_STRING MATCHES "udp")
+    set(LWIP_APP_SELECT LWIP_APP_UDP_ECHOSERVER)
+elseif(LWIP_APP_STRING MATCHES "tcp")
+    set(LWIP_APP_SELECT LWIP_APP_TCP_ECHOSERVER)
+endif()
+
+set(LWIP_APP_TCPIP_PORT 7)
+set(LWIP_APP_LED_BLINK_INTERVAL 1000)
+# RTEMS priorities ranging from 1 (highest) to 254 (lowest)
+set(LWIP_APP_SERVER_THREAD_PRIO 50)
+
+option(LWIP_APP_BLINK_LED_PERIODIC  "Blink LED periodically"    ON)
+option(LWIP_APP_RECEIVE_WIRETAPPING "Reception wiretapping"     OFF)
+option(LWIP_APP_USE_DHCP            "Use DHCP"                  ON)
+
+configure_file(conf_app.h.in conf_app.h @ONLY)
+
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
 ################################################################################
 # Load RTEMS pre-project configuration and checks
 ################################################################################
@@ -49,7 +82,7 @@ if(RTEMS_BSP MATCHES "arm/nucleo-h743zi")
 endif()
 
 add_subdirectory(rtems-lwip)
-add_subdirectory(networking)
+add_subdirectory(echoserver)
 
 target_sources(${TARGET_NAME} PRIVATE
     init.c

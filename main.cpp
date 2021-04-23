@@ -1,27 +1,34 @@
+/**
+ * @brief   Demo application for the STM32 RTEMS lwIP support.
+ * @details
+ * This example was used to test all three major lwIP APIs on the STM32H7 with RTEMS
+ *
+ *  1. RAW API, high performance using callbacks
+ *  2. Netcon API, sequential API
+ *  3. Socket API, sequential API, less performance but portable API.
+ *
+ * This demo can be configured through the CMake build system or by manually editing the
+ * conf_app.h file in the build folder.
+ * @author  R. Mueller
+ * @return
+ */
 #include "conf_app.h"
+#include "rtems_lwip.h"
 
-#include <stm32h7xx_nucleo.h>
-#include <networking/udp_echoserver.h>
+#include "stm32h7xx_nucleo.h"
 
-#include <lwip_port/app_ethernet.h>
-#include <lwip_port/ethernetif.h>
-#include <lwip_port/app_dhcp.h>
+#include "echoserver/socket/socket_app.h"
+#include "echoserver/raw/raw_app.h"
+#include "echoserver/netcon/netconn_app.h"
 
-#include <lwip/netif.h>
-#include <lwip/timeouts.h>
+#include "lwip_port/ethernetif.h"
+#include "lwip_port/app_ethernet.h"
+#include "lwip_port/app_dhcp.h"
 
 #include <rtems.h>
 #include <rtems/console.h>
-#include <rtems_lwip.h>
 
 #include <stdio.h>
-
-#if LWIP_APP_BLINK_LED_PERIODIC == 1
-void led_periodic_handle();
-uint32_t led_timer = 0;
-#endif
-
-void stm32_lwip_raw_api_app();
 
 int main() {
   printf("\n\r-- STM32 RTEMS lwIP Application -- \n\r");
@@ -51,50 +58,15 @@ int main() {
   BSP_LED_Init(LED2);
   BSP_LED_Init(LED3);
 
-  set_dhcp_state(DHCP_START);
-
   rtems_lwip_init(NULL, &ethernet_link_status_updated);
 
   /* Raw API (mainloop) */
 #if LWIP_APP_API_SELECT == LWIP_APP_RAW_API
   stm32_lwip_raw_api_app();
+#elif LWIP_APP_API_SELECT == LWIP_APP_NETCON_API
+  stm32_lwip_netconn_api_app();
+#elif LWIP_APP_API_SELECT == LWIP_APP_SOCKET_API
+  stm32_lwip_socket_api_app();
 #endif
 
-}
-
-void led_periodic_handle() {
-  uint32_t time_now = HAL_GetTick();
-  /* Blink LED every configured ms */
-  if (time_now - led_timer >= LWIP_APP_LED_BLINK_INTERVAL) {
-    led_timer = time_now;
-    BSP_LED_Toggle(LED1);
-  }
-}
-
-void stm32_lwip_raw_api_app() {
-
-#if LWIP_APP_SELECT == LWIP_APP_UDP_ECHOSERVER
-  udp_echoserver_init(7);
-#else
-#endif
-
-  while (1) {
-    /* Read a received packet from the Ethernet buffers and send it
-           to the lwIP for handling */
-    ethernetif_input(rtems_lwip_get_netif(0));
-
-    /* Handle timeouts */
-    sys_check_timeouts();
-
-#if LWIP_NETIF_LINK_CALLBACK
-    ethernet_link_periodic_handle(rtems_lwip_get_netif(0));
-#endif
-
-#if LWIP_DHCP
-    dhcp_periodic_handle(rtems_lwip_get_netif(0));
-#endif
-
-    led_periodic_handle();
-
-  }
 }

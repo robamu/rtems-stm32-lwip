@@ -18,12 +18,13 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
+#include "udp_echo_raw.h"
 #include "lwip/pbuf.h"
 #include "lwip/udp.h"
 #include "lwip/tcp.h"
 #include <string.h>
 #include <stdio.h>
-#include "udp_echoserver.h"
+
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -66,7 +67,7 @@ void udp_echoserver_init(uint8_t server_port)
 }
 
 /**
-  * @brief This function is called when an UDP datagrm has been received on the port UDP_PORT.
+  * @brief This function is called when an UDP datagram has been received on the port UDP_PORT.
   * @param arg user supplied argument (udp_pcb.recv_arg)
   * @param pcb the udp_pcb which received data
   * @param p the packet buffer that was received
@@ -84,6 +85,14 @@ void udp_echoserver_receive_callback(void *arg, struct udp_pcb *upcb, struct pbu
   if(p_tx != NULL)
   {
     pbuf_take(p_tx, (char*)p->payload, p->len);
+
+#if LWIP_APP_RECEIVE_WIRETAPPING == 1
+    char* data = (char*) p_tx->payload;
+    *(data + p_tx->len) = '\0';
+    printf("UDP Server received %d bytes\n\r", p_tx->len);
+    printf("Received string: %s\n\r", data);
+#endif
+
     /* Connect to the remote client */
     udp_connect(upcb, addr, port);
     
