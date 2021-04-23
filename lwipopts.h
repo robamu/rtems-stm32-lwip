@@ -47,6 +47,7 @@
 #define __LWIPOPTS_H__
 
 #include "conf_app.h"
+#include "bsp.h"
 
 /**
  * SYS_LIGHTWEIGHT_PROT==1: if you want inter-task protection for certain
@@ -271,7 +272,7 @@ The STM32H7xx allows computing and verifying the IP, UDP, TCP and ICMP checksums
 */
 
 #define TCPIP_THREAD_NAME              "TCP/IP"
-#define TCPIP_THREAD_STACKSIZE          1000
+#define TCPIP_THREAD_STACKSIZE          RTEMS_MINIMUM_STACK_SIZE
 #define TCPIP_MBOX_SIZE                 6
 #define DEFAULT_UDP_RECVMBOX_SIZE       6
 #define DEFAULT_TCP_RECVMBOX_SIZE       6

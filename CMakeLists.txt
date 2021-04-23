@@ -30,6 +30,8 @@ endif()
 
 set(LWIP_APP_TCPIP_PORT 7)
 set(LWIP_APP_LED_BLINK_INTERVAL 1000)
+# RTEMS priorities ranging from 1 (highest) to 254 (lowest)
+set(LWIP_APP_SERVER_THREAD_PRIO 50)
 
 option(LWIP_APP_BLINK_LED_PERIODIC  "Blink LED periodically"    ON)
 option(LWIP_APP_RECEIVE_WIRETAPPING "Reception wiretapping"     OFF)

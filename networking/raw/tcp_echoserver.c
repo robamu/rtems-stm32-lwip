@@ -77,7 +77,7 @@ static void tcp_echoserver_connection_close(struct tcp_pcb *tpcb, struct tcp_ech
   * @param  None
   * @retval None
   */
-void tcp_echoserver_init(void)
+void tcp_echoserver_init(uint8_t server_port)
 {
   /* create new tcp pcb */
   tcp_echoserver_pcb = tcp_new();
@@ -87,7 +87,7 @@ void tcp_echoserver_init(void)
     err_t err;
 
     /* bind echo_pcb to port 7 (ECHO protocol) */
-    err = tcp_bind(tcp_echoserver_pcb, IP_ADDR_ANY, 7);
+    err = tcp_bind(tcp_echoserver_pcb, IP_ADDR_ANY, server_port);
 
     if (err == ERR_OK)
     {

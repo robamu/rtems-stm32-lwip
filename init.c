@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <conf_app.h>
 #include <bsp.h>
 #include <rtems/rtems/tasks.h>
 
@@ -16,7 +17,7 @@ rtems_task Init(rtems_task_argument argument) {
 
 //! Specify the allocation scheme used for RTEMS.
 //! See: https://docs.rtems.org/branches/master/c-user/config/intro.html
-#define RTEMS_USE_UNLIMITED_OBJECTS_ALLOCATION  0
+#define RTEMS_USE_UNLIMITED_OBJECTS_ALLOCATION  1
 
 #define CONFIGURE_RTEMS_INIT_TASKS_TABLE
 

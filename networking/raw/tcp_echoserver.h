@@ -30,6 +30,16 @@
 #ifndef __TCP_ECHOSERVER_H__
 #define __TCP_ECHOSERVER_H__
 
-void tcp_echoserver_init(void);
+#include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void tcp_echoserver_init(uint8_t server_port);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __TCP_ECHOSERVER */
