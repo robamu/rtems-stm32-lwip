@@ -8,6 +8,7 @@
 
 #if LWIP_SOCKET
 
+#include "tcp_echo_socket.h"
 #include "udp_echo_socket.h"
 #include <conf_app.h>
 #include <stm32h7xx_nucleo.h>
@@ -15,6 +16,8 @@
 #include "lwip/sys.h"
 
 #include <stdio.h>
+
+uint8_t recv_buffer[ETH_RX_BUFFER_SIZE] RTEMS_ALIGNED(32);
 
 void stm32_lwip_socket_api_app() {
 

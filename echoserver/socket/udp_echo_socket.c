@@ -1,3 +1,4 @@
+#include "socket_app.h"
 #include "udp_echo_socket.h"
 #include "lwip_port/ethernetif.h"
 
@@ -9,19 +10,17 @@
 #include "lwip/sockets.h"
 #include "lwip/netdb.h"
 
-uint8_t recv_buffer[ETH_RX_BUFFER_SIZE];
 
 void udp_socket_thread(void* args) {
   int sock, newconn, size;
   struct sockaddr_in address;
 
-
   /* create a UDP socket */
-  if ((sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
-  {
+  if ((sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
     printf("udp_socket_init: Socket creation failed\n");
     return;
   }
+
   /* bind to port 80 at any interface */
   address.sin_family = AF_INET;
   address.sin_port = htons(LWIP_APP_TCPIP_PORT);
@@ -61,7 +60,10 @@ void udp_socket_thread(void* args) {
                 (const struct sockaddr *) &remotehost,
                 sizeof(remotehost)
         );
+#if LWIP_APP_RECEIVE_WIRETAPPING == 1
         printf("Sent back %d bytes\n", send_ret);
+#endif
+
     }
     else if(recv_size == 0) {
         printf("Empty packet received\n");
