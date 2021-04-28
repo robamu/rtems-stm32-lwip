@@ -1,6 +1,6 @@
 from definitions import Protocols
 
-TCPIP_PROT = Protocols.TCPIP_PROT_0_TCP
+TCPIP_PROT = Protocols.TCPIP_PROT_1_UDP
 
 BUFFER_SIZES = 1500
 

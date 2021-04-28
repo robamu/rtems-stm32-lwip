@@ -81,7 +81,9 @@ if(RTEMS_BSP MATCHES "arm/nucleo-h743zi")
     add_subdirectory(bsp_stm32)
 endif()
 
-add_subdirectory(rtems-lwip)
+# RTMES lwIP is now installed like a BSP
+# add_subdirectory(rtems-lwip)
+
 add_subdirectory(echoserver)
 
 target_sources(${TARGET_NAME} PRIVATE

@@ -47,7 +47,7 @@
 #define __LWIPOPTS_H__
 
 #include "conf_app.h"
-#include "bsp.h"
+#include <bsp.h>
 
 /**
  * SYS_LIGHTWEIGHT_PROT==1: if you want inter-task protection for certain

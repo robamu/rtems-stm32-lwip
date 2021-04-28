@@ -1,13 +1,13 @@
 #include "netconn_app.h"
 #include "conf_app.h"
-#include "rtems_lwip.h"
 
 #include "echoserver/common/common.h"
 
-#include "lwip_port/app_dhcp.h"
-#include "lwip_port/ethernetif.h"
+#include <rtems_lwip/rtems_lwip.h>
+#include <rtems_lwip/app_dhcp.h>
+#include <rtems_lwip/ethernetif.h>
 
-#include "lwip/opt.h"
+#include <lwip/opt.h>
 
 #if LWIP_NETCONN
 
@@ -15,7 +15,7 @@
 #include "tcp_echo_netconn.h"
 
 #include "stm32h7xx_nucleo.h"
-#include "lwip/sys.h"
+#include <lwip/sys.h>
 
 #include <stdio.h>
 

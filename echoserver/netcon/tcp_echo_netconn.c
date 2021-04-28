@@ -31,12 +31,12 @@
  */
 /* Includes ------------------------------------------------------------------*/
 #include "tcp_echo_netconn.h"
-#include "lwip/opt.h"
+#include <lwip/opt.h>
 
 #if LWIP_NETCONN
 
-#include "lwip/sys.h"
-#include "lwip/api.h"
+#include <lwip/sys.h>
+#include <lwip/api.h>
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
