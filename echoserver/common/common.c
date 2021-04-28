@@ -1,16 +1,16 @@
 #include "common.h"
 #include "stm32h7xx_nucleo.h"
 
-#include "lwip/opt.h"
+#include <lwip/opt.h>
 
 #if NO_SYS == 0
 
-#include "lwip/sys.h"
+#include <lwip/sys.h>
 
-#include "rtems_lwip.h"
-#include "lwip_port/app_ethernet.h"
-#include "lwip_port/app_dhcp.h"
-#include "lwip_port/ethernetif.h"
+#include <rtems_lwip/rtems_lwip.h>
+#include <rtems_lwip/app_ethernet.h>
+#include <rtems_lwip/app_dhcp.h>
+#include <rtems_lwip/ethernetif.h>
 
 #include <bsp.h>
 

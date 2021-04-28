@@ -32,12 +32,12 @@
 /* Includes ------------------------------------------------------------------*/
 #include "udp_echo_netconn.h"
 
-#include "lwip/opt.h"
+#include <lwip/opt.h>
 
 #if LWIP_NETCONN
 
-#include "lwip/api.h"
-#include "lwip/sys.h"
+#include <lwip/api.h>
+#include <lwip/sys.h>
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 

@@ -35,9 +35,9 @@
  /* This file was modified by ST */
 
 #include "tcp_echo_raw.h"
-#include "lwip/debug.h"
-#include "lwip/stats.h"
-#include "lwip/tcp.h"
+#include <lwip/debug.h>
+#include <lwip/stats.h>
+#include <lwip/tcp.h>
 
 #if LWIP_TCP
 

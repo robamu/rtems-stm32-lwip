@@ -1,10 +1,10 @@
 #include "socket_app.h"
 #include "echoserver/common/common.h"
 
-#include "rtems_lwip.h"
-#include "lwip_port/app_dhcp.h"
-#include "lwip_port/ethernetif.h"
-#include "lwip/opt.h"
+#include <rtems_lwip/rtems_lwip.h>
+#include <rtems_lwip/app_dhcp.h>
+#include <rtems_lwip/ethernetif.h>
+#include <lwip/opt.h>
 
 #if LWIP_SOCKET
 

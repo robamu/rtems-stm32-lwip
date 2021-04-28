@@ -1,6 +1,6 @@
 #include "socket_app.h"
 #include "udp_echo_socket.h"
-#include "lwip_port/ethernetif.h"
+#include "rtems_lwip/ethernetif.h"
 
 #include "lwip/opt.h"
 

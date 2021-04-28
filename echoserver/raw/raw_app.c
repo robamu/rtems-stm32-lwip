@@ -1,6 +1,6 @@
 #include "raw_app.h"
 
-#include "lwip/opt.h"
+#include <lwip/opt.h>
 
 #if NO_SYS == 1
 
@@ -9,12 +9,12 @@
 #include "udp_echo_raw.h"
 #include "tcp_echo_raw.h"
 
-#include "lwip_port/ethernetif.h"
-#include "lwip_port/app_ethernet.h"
-#include "lwip_port/app_dhcp.h"
-#include "rtems_lwip.h"
+#include <rtems_lwip/ethernetif.h>
+#include <rtems_lwip/app_ethernet.h>
+#include <rtems_lwip/app_dhcp.h>
+#include <rtems_lwip/rtems_lwip.h>
 
-#include "lwip/timeouts.h"
+#include <lwip/timeouts.h>
 
 #if LWIP_APP_BLINK_LED_PERIODIC == 1
 void led_periodic_handle();

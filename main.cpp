@@ -13,7 +13,7 @@
  * @return
  */
 #include "conf_app.h"
-#include "rtems_lwip.h"
+#include "rtems_lwip/rtems_lwip.h"
 
 #include "stm32h7xx_nucleo.h"
 
@@ -21,9 +21,9 @@
 #include "echoserver/raw/raw_app.h"
 #include "echoserver/netcon/netconn_app.h"
 
-#include "lwip_port/ethernetif.h"
-#include "lwip_port/app_ethernet.h"
-#include "lwip_port/app_dhcp.h"
+#include <rtems_lwip/ethernetif.h>
+#include <rtems_lwip/app_ethernet.h>
+#include <rtems_lwip/app_dhcp.h>
 
 #include <rtems.h>
 #include <rtems/console.h>
