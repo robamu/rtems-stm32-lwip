@@ -11,7 +11,14 @@ The APIs were tested using a simple UDP or TCP echoserver. The default port is 7
 enabled by default. The assigned server will be printed so it should be sufficient to plug
 the flashed NUCLEO board into a router and monitor the serial output.
 
-After cloning this repository, make sure to clone the submodules as well
+After cloning this repository with
+
+```sh
+git clone https://github.com/rmspacefish/rtems-stm32-lwip.git
+cd rtems-stm32-lwip
+```
+
+make sure to clone the submodules as well
 
 ```sh
 git submodule init
@@ -54,16 +61,32 @@ export RTEMS_PREFIX=<RTEMS Prefix Path>
 You can also extract this step to a script which is `source`ed or add it to the environmental 
 variables permanently by adding the line to the `.bashrc` file.
 
-The application can be built with the following commands. On Windows, add `-G "MinGW Makefiles"` 
-in the `CMake` build generation command before the `..`.
+Generate the build system with CMake first:
 
 ```sh
-git clone https://github.com/rmspacefish/rtems-stm32-lwip.git
-cd rtems-stm32-lwip
 mkdir build-Debug && cd build-Debug
 cmake -DCMAKE_BUILD_TYPE="Debug" -DRTEMS_BSP="arm/nucleo-h743zi" -DRTEMS_PREFIX=$RTEMS_PREFIX ..
+```
+
+You can now edit the `conf_app.h` file inside the build folder to configure the application.
+
+After that, RTEMS lwIP needs to be built and installed. A helper script has been provided to 
+do this.
+
+```sh
+./install-rtems-lwip.sh
+```
+
+Finally, you can build the application
+
+```sh
+cd build-Debug
 cmake --build . -j
 ```
+
+## Waf
+
+TODO
 
 # Flashing the application
 
@@ -85,7 +108,7 @@ $_CHIPNAME.cpu0 configure -event gdb-attach {
     reset init
 }
 ```
-   
+
 # Testing the application
 
 The `ip_client` contains a simply Python TCP/IP client implementation which can be
